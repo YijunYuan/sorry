@@ -2,14 +2,17 @@
 \ProvidesPackage{sorry}[2024/09/07 Generate placeholder]
 \RequirePackage{xcolor}
 \RequirePackage{fontawesome}
+\RequirePackage{textcomp}
 
 \ProcessOptions\relax
-\newcommand{\SORRYFORMAT}{\color{red}\bfseries}
+\newcommand{\SORRYFORMAT}{\color{red}\bfseries\itshape}
 \newcommand{\TBAFORMAT}{\color{blue}\bfseries\itshape}
+\newcommand{\REFNEEDEDFORMAT}{\color{cyan}\bfseries\itshape}
 
 \makeatletter
 \newcounter{sorry@sorrycount}
 \newcounter{sorry@tbacount}
+\newcounter{sorry@refneededcount}
 \makeatother
 
 \newcommand{\TBA}[2][\TBAFORMAT]{
@@ -26,17 +29,29 @@
     \PackageWarning{sorry}{
         Sorry used here
     }{
-        #1[{\normalfont\faWarning} Sorry!]
+        #1\{{\normalfont\faWarning} Sorry!\}
     }
     \makeatletter
         \stepcounter{sorry@sorrycount}
     \makeatother
 }
+\newcommand{\refneeded}[1][\REFNEEDEDFORMAT]{
+    \PackageWarning{sorry}{
+        You need to provide a reference here
+    }{
+        #1{\textlangle {\normalfont\faBook}} Reference needed!\textrangle
+    }
+    \makeatletter
+        \stepcounter{sorry@refneededcount}
+    \makeatother
+}
 
 \newif\ifTBAsummary
 \newif\ifsorrysummary
+\newif\ifrefneededsummary
 \TBAsummarytrue
 \sorrysummarytrue
+\refneededsummarytrue
 
 \makeatletter
 \AtEndDocument{
@@ -55,6 +70,15 @@
     \fi
     \ifnum\value{sorry@tbacount}=1%
         \PackageWarning{sorry}{There is 1 \protect\TBA\space used in this document}
+    \fi
+    \fi
+
+    \ifrefneededsummary
+    \ifnum\value{sorry@refneededcount}>1%
+        \PackageWarning{sorry}{There are \thesorry@refneededcount\space \protect\refneeded\space used in this document}
+    \fi
+    \ifnum\value{sorry@refneededcount}=1%
+        \PackageWarning{sorry}{There is 1 \protect\refneeded\space used in this document}
     \fi
     \fi
 }
