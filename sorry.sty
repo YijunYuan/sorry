@@ -1,0 +1,63 @@
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{sorry}[2024/09/07 Generate placeholder]
+\RequirePackage{xcolor}
+\RequirePackage{fontawesome}
+
+\ProcessOptions\relax
+\newcommand{\SORRYFORMAT}{\color{red}\bfseries}
+\newcommand{\TBAFORMAT}{\color{blue}\bfseries\itshape}
+
+\makeatletter
+\newcounter{sorry@sorrycount}
+\newcounter{sorry@tbacount}
+\makeatother
+
+\newcommand{\TBA}[2][\TBAFORMAT]{
+    \PackageWarning{sorry}{
+        TBA used here. Message: #2
+    }{
+        #1[{\normalfont\faWrench} TBA:~#2]
+    }
+    \makeatletter
+        \stepcounter{sorry@tbacount}
+    \makeatother
+}
+\newcommand{\sorry}[1][\SORRYFORMAT]{
+    \PackageWarning{sorry}{
+        Sorry used here
+    }{
+        #1[{\normalfont\faWarning} Sorry!]
+    }
+    \makeatletter
+        \stepcounter{sorry@sorrycount}
+    \makeatother
+}
+
+\newif\ifTBAsummary
+\newif\ifsorrysummary
+\TBAsummarytrue
+\sorrysummarytrue
+
+\makeatletter
+\AtEndDocument{
+    \ifsorrysummary
+    \ifnum\value{sorry@sorrycount}>1%
+        \PackageWarning{sorry}{There are \thesorry@sorrycount\space \protect\sorry\space used in this document}
+    \fi
+    \ifnum\value{sorry@sorrycount}=1%
+        \PackageWarning{sorry}{There is 1 \protect\sorry\space used in this document}
+    \fi
+    \fi
+
+    \ifTBAsummary
+    \ifnum\value{sorry@tbacount}>1%
+        \PackageWarning{sorry}{There are \thesorry@tbacount\space \protect\TBA\space used in this document}
+    \fi
+    \ifnum\value{sorry@tbacount}=1%
+        \PackageWarning{sorry}{There is 1 \protect\TBA\space used in this document}
+    \fi
+    \fi
+}
+\makeatother
+
+\endinput
