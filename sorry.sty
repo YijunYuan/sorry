@@ -57,28 +57,28 @@
 \AtEndDocument{
     \ifsorrysummary
     \ifnum\value{sorry@sorrycount}>1%
-        \PackageWarning{sorry}{There are \thesorry@sorrycount\space \protect\sorry\space used in this document}
+        \PackageWarningNoLine{sorry}{There are \thesorry@sorrycount\space \protect\sorry\space used in this document}
     \fi
     \ifnum\value{sorry@sorrycount}=1%
-        \PackageWarning{sorry}{There is 1 \protect\sorry\space used in this document}
+        \PackageWarningNoLine{sorry}{There is 1 \protect\sorry\space used in this document}
     \fi
     \fi
 
     \ifTBAsummary
     \ifnum\value{sorry@tbacount}>1%
-        \PackageWarning{sorry}{There are \thesorry@tbacount\space \protect\TBA\space used in this document}
+        \PackageWarningNoLine{sorry}{There are \thesorry@tbacount\space \protect\TBA\space used in this document}
     \fi
     \ifnum\value{sorry@tbacount}=1%
-        \PackageWarning{sorry}{There is 1 \protect\TBA\space used in this document}
+        \PackageWarningNoLine{sorry}{There is 1 \protect\TBA\space used in this document}
     \fi
     \fi
 
     \ifrefneededsummary
     \ifnum\value{sorry@refneededcount}>1%
-        \PackageWarning{sorry}{There are \thesorry@refneededcount\space \protect\refneeded\space used in this document}
+        \PackageWarningNoLine{sorry}{There are \thesorry@refneededcount\space \protect\refneeded\space used in this document}
     \fi
     \ifnum\value{sorry@refneededcount}=1%
-        \PackageWarning{sorry}{There is 1 \protect\refneeded\space used in this document}
+        \PackageWarningNoLine{sorry}{There is 1 \protect\refneeded\space used in this document}
     \fi
     \fi
 }
